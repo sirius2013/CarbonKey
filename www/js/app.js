@@ -4,6 +4,7 @@
 var modules = [
   'ionic', 
   'ngCordova',
+  'ngLodash',
   'carbonkey.services',
   'carbonkey.controllers',
 ];
