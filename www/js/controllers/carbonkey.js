@@ -62,34 +62,48 @@ angular.module('carbonkey.controllers').controller("CarbonKeyController",
     } else if(onChainService.getParsed().cmd == 'sign') {
       _signTransaction();
     }
-  }
+  };
   
   var _signTransaction = function() {
+    
     var serviceUrl = onChainService.getParsed().service;
-    confirmDialog.show('Sign the transaction with '+serviceUrl+'?', function(confirmed){
-      if(confirmed) {
-        self.setOngoingProcess('Signing transaction with '+serviceUrl);
+    
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Share a Transaction',
+      template: 'Sign the transaction with ' + serviceUrl + '?'
+    });
+    
+    confirmPopup.then(function(res) {
+      if(res) {
+        $ionicLoading.show({
+          template: 'Signing transaction with ' + serviceUrl
+        });
+        
         var txReq = onChainService.getTransaction();
         txReq.then(function(data, status, headers, config) {
-          self.setOngoingProcess('Sending singatures');
+          
+          $ionicLoading.show({
+            template: 'Sending Signatures'
+          });
+          
           try {
             var sigList = onChainService.signTransaction(data.data);
             var postReq = onChainService.postSignedRequest(sigList);
             postReq.then(function(pData, pStatus, pHeaders, pConfig) {
               alert('Transaction signed');
-              self.setOngoingProcess();
+              $ionicLoading.hide();
             }, function(pData, pStatus, pHeaders, pConfig) {
               var message = pData.message || '';
               alert('Error sending signatures. '+message);
-              self.setOngoingProcess();
+              $ionicLoading.hide();
             });
           } catch (err) {
             alert(err);
-            self.setOngoingProcess();
+            $ionicLoading.hide();
           }
         }, function(data, status, headers, config) {
           alert('Error getting transaction');
-          self.setOngoingProcess();
+          $ionicLoading.hide();
         });
       }
     });
