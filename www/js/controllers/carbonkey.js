@@ -2,7 +2,8 @@
 /* global angular, Bitcoin */
 angular.module('carbonkey.controllers').controller("CarbonKeyController", 
   function($scope, $cordovaBarcodeScanner, isDevice, addressParser,
-    bitIDService, onChainService, $ionicLoading, $ionicPopup) {
+    bitIDService, onChainService, $ionicLoading, $ionicPopup, 
+    $ionicSideMenuDelegate) {
 
   this.initialise = function() {
     var keyPair = Bitcoin.ECPair.makeRandom();
@@ -24,6 +25,10 @@ angular.module('carbonkey.controllers').controller("CarbonKeyController",
     } else if(addressParser.isOnChain(data) === true) {
       $scope.processONCHAIN(data);
     }
+  };
+  
+  $scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
   };
   
   /**

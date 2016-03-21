@@ -3,7 +3,24 @@
 
 angular.module('carbonkey').config(function($stateProvider, $urlRouterProvider) {
   
-  $urlRouterProvider.otherwise('/')
+  $stateProvider
+    .state('app', {
+      url: "/app",
+      abstract: true,
+      templateUrl: "views/side-menu.html",
+      controller : "AppController"
+    })
+    .state('app.home', {
+      url: "/home",
+      views: {
+        'menuContent' :{
+          templateUrl: "views/home.html",
+          controller : "CarbonKeyController"
+        }
+      }
+    })
+
+  $urlRouterProvider.otherwise('/app/home')
 
   $stateProvider.state('home', {
     url: '/',
