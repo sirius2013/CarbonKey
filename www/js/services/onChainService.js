@@ -123,7 +123,6 @@ angular.module('carbonkey.services')
           sig_list[x][address]['sig'] = signed_hash;
         }
       }
-      
       return JSON.stringify(sig_list);
     }; 
 
@@ -152,7 +151,6 @@ angular.module('carbonkey.services')
       var xpubB58 = _getDerivedXpub58();
       var reqObj = service.buildRequestMPKObject(xpubB58);
       var callbackURL = service.getParsed().post_back;
-      alert(xpubB58);
       var req = {
           method: 'POST',
           url: callbackURL,

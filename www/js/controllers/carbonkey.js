@@ -16,6 +16,7 @@ angular.module('carbonkey.controllers').controller("CarbonKeyController",
   }
   
   $scope.imageData = {};
+  $scope.public_key = new Bitcoin.ECPair.fromWIF(window.localStorage.getItem("wif")).getAddress();
   
   $scope.processQRCode = function(data) {
     if (addressParser.isBitID(data) === true) {
