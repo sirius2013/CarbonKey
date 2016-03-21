@@ -6,24 +6,38 @@
         <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()">
         </button>
       </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-navicon" ng-click="toggleRight()">
+        </button>
+      </ion-nav-buttons>
     </ion-nav-bar>
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
-      <h1 class="title">Left</h1>
+      <h1 class="title">Carbon Key</h1>
     </header>
     <ion-content class="has-header">
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/search">
-          Search
+        <ion-item nav-clear menu-close href="#/app/home">
+          Carbon Key
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/browse">
-          Browse
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+
+  <ion-side-menu side="right">
+    <header class="bar bar-header bar-stable">
+      <h1 class="title">Carbon Key</h1>
+    </header>
+    <ion-content class="has-header">
+      <ion-list>
+        <ion-item nav-clear menu-close href="#/app/backup">
+          Backup this Key
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/playlists">
-          Playlists
+        <ion-item nav-clear menu-close href="#/app/restore">
+          Restore from Backup
         </ion-item>
       </ion-list>
     </ion-content>
