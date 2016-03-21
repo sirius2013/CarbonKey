@@ -19,6 +19,24 @@ angular.module('carbonkey').config(function($stateProvider, $urlRouterProvider) 
         }
       }
     })
+    .state('app.backup', {
+      url: "/backup",
+      views: {
+        'menuContent' :{
+          templateUrl: "views/backup.html",
+          controller : "BackupController"
+        }
+      }
+    })
+    .state('app.restore', {
+      url: "/restore",
+      views: {
+        'menuContent' :{
+          templateUrl: "views/restore.html",
+          controller : "RestoreController"
+        }
+      }
+    })
 
   $urlRouterProvider.otherwise('/app/home')
 

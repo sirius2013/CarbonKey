@@ -2,22 +2,22 @@
 /* global angular, Bitcoin */
 angular.module('carbonkey.controllers').controller("CarbonKeyController", 
   function($scope, $cordovaBarcodeScanner, isDevice, addressParser,
-    bitIDService, onChainService, $ionicLoading, $ionicPopup, 
+    bitIDService, onChainService, bip39, $ionicLoading, $ionicPopup, 
     $ionicSideMenuDelegate) {
 
   this.initialise = function() {
-    var keyPair = Bitcoin.ECPair.makeRandom();
-    var wif = keyPair.toWIF();
-    
-    window.localStorage.setItem("wif", wif);
+    var words = bip39.generateBip39();
+    window.localStorage.setItem("bip39", words);
+    window.localStorage.setItem("wif", bip39.toWIF(words));
   };
   
-  if(window.localStorage.getItem("wif") == null) {
+  if(window.localStorage.getItem("bip39") == null) {
     this.initialise();
   }
   
   $scope.imageData = {};
-  $scope.public_key = new Bitcoin.ECPair.fromWIF(window.localStorage.getItem("wif")).getAddress();
+  $scope.public_key = new bip39.toECKey(window.localStorage.getItem("bip39")).getAddress();
+  
   
   $scope.processQRCode = function(data) {
     if (addressParser.isBitID(data) === true) {
