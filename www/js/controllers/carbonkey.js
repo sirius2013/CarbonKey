@@ -6,10 +6,15 @@ angular.module('carbonkey.controllers').controller("CarbonKeyController",
     $ionicSideMenuDelegate) {
       
   $scope.$on('$ionicView.enter', function() {
+    
     if(window.localStorage.getItem("bip39") == null) {
       this.initialise();
     }
-    $scope.public_key = new bip39.toECKey(window.localStorage.getItem("bip39")).getAddress();
+    
+    if($scope.mnemonic == null || $scope.mnemonic != window.localStorage.getItem("bip39")) {
+      $scope.public_key = new bip39.toECKey(window.localStorage.getItem("bip39")).getAddress();
+      $scope.mnemonic = window.localStorage.getItem("bip39");
+    }
   });
 
   this.initialise = function() {
