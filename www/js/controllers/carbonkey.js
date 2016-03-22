@@ -4,6 +4,13 @@ angular.module('carbonkey.controllers').controller("CarbonKeyController",
   function($scope, $cordovaBarcodeScanner, isDevice, addressParser,
     bitIDService, onChainService, bip39, $ionicLoading, $ionicPopup, 
     $ionicSideMenuDelegate) {
+      
+  $scope.$on('$ionicView.enter', function() {
+    if(window.localStorage.getItem("bip39") == null) {
+      this.initialise();
+    }
+    $scope.public_key = new bip39.toECKey(window.localStorage.getItem("bip39")).getAddress();
+  });
 
   this.initialise = function() {
     var words = bip39.generateBip39();
@@ -11,12 +18,7 @@ angular.module('carbonkey.controllers').controller("CarbonKeyController",
     window.localStorage.setItem("wif", bip39.toWIF(words));
   };
   
-  if(window.localStorage.getItem("bip39") == null) {
-    this.initialise();
-  }
-  
   $scope.imageData = {};
-  $scope.public_key = new bip39.toECKey(window.localStorage.getItem("bip39")).getAddress();
   
   
   $scope.processQRCode = function(data) {
