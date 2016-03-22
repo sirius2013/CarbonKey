@@ -13,6 +13,15 @@ angular.module('carbonkey.services')
     return bip39.generate();
   };
 
+  service.isValid = function(words) {
+    
+    if(words == null)
+      words = '';
+      
+    var bip39 = new Mnemonic('english');
+    return bip39.check(words);
+  };
+
   service.toSeed = function(words) {
     
     var bip39 = new Mnemonic('english');

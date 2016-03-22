@@ -1,5 +1,29 @@
 <ion-view title="Carbon Key - Restore">
-  <ion-content>
-    <h2>Restore</h2>
+  <ion-content class="padding">
+
+    <h2 style="text-align: center;">Enter your passphrase backup</h2>
+    <br/>
+
+    <form name="passphraseForm" novalidate="" ng-submit="restorePassphrase(passphrase)">
+
+      <div class="list">
+
+        <label class="item item-input">
+          <span class="input-label">Passphrase</span>
+          <textarea name="passphrase" ng-model="passphrase"></textarea>
+        </label>
+
+      </div>
+
+      <div class="padding">
+        <p ng-show="isValid == false">Not a valid passphrase</p>
+      </div>
+
+      <button class="button button-full button-positive" type="submit">
+        Restore Key
+      </button>
+
+    </form>
+
   </ion-content>
 </ion-view>
