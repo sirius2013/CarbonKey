@@ -1,5 +1,6 @@
 # CarbonKey
-Ionic mobile app for authentication and transaction signing.
+
+CarbonKey is used in conjuction with Carbon Wallet https://carbonwallet.com to create secure 2 of 2 multi signature bitcoin wallets where you are in charge of your private keys.
 
 <table>
 <tr>
