@@ -82,16 +82,6 @@ angular.module('carbonkey.services')
       });
     };
 
-    //@TODO Extract to SignUtils service
-    service.crc16 = function(addr, idx) {
-      if(idx == undefined) {
-        idx = 0;
-      }
-      var sha256URL = Bitcoin.crypto.sha256(addr);
-      var sha32uri = sha256URL.readInt32LE(1);
-      return "m/0'/0xb11e'/"+sha32uri+"/"+idx;
-    };
-
     service.signTransaction = function(transactionHex) {
       
       var sigList = null;
@@ -102,7 +92,7 @@ angular.module('carbonkey.services')
         alert('Error, invalid Transaction');
         return;
       }
-      var pk = _getHDWalletDeterministicKey(service.crc16(_parsed.service));
+      var pk = _getHDWalletDeterministicKey();
       return _signSignatureList(pk.keyPair, sigList);
     };
      
@@ -126,13 +116,13 @@ angular.module('carbonkey.services')
       return JSON.stringify(sig_list);
     }; 
 
-    var _getHDWalletDeterministicKey = function(idx) {
+    var _getHDWalletDeterministicKey = function() {
       
       var keyPair = Bitcoin.ECPair.fromWIF(_wif);
       var phex = keyPair.d.toBuffer().toString('hex');
       var hd = Bitcoin.HDNode.fromSeedHex(phex);
       
-      var derivedByArgument = hd.derive(idx);
+      var derivedByArgument = hd.derive("m/0'");
       return derivedByArgument;
     };
 
@@ -143,7 +133,7 @@ angular.module('carbonkey.services')
     };
 
     var _getDerivedXpub58 = function () {
-      var derivedKey = _getHDWalletDeterministicKey(service.crc16(_parsed.service));
+      var derivedKey = _getHDWalletDeterministicKey();
       return derivedKey.neutered().toBase58();
     };
 
