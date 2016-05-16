@@ -103,6 +103,7 @@ angular.module('carbonkey.services')
       var sig_list = JSON.parse(sigList);
       
       var address = key.getAddress();
+      var full_address = key.getPublicKeyBuffer().toString('hex');
       
       for(var x = 0; x < sig_list.length; x++) {
         
@@ -111,6 +112,11 @@ angular.module('carbonkey.services')
           var signed_hash = key.sign_hex_hash(hash).toDER().toString("hex");
           
           sig_list[x][address]['sig'] = signed_hash;
+        } else if(sig_list[x][full_address] != null) {
+          var hash = sig_list[x][full_address]['hash'];
+          var signed_hash = key.sign_hex_hash(hash).toDER().toString("hex");
+          
+          sig_list[x][full_address]['sig'] = signed_hash;
         }
       }
       return JSON.stringify(sig_list);
