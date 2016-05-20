@@ -200,13 +200,20 @@ angular.module('carbonkey.controllers').controller("CarbonKeyController",
         return;
       });
     } else {
+      
+      if ($scope.currentlyScanning === true) {
+        return;
+      }
     
+      $scope.currentlyScanning = true;
       $cordovaBarcodeScanner.scan().then(function(imageData) {
+        $scope.currentlyScanning = false;
         $scope.imageData = imageData;
         if(!imageData.cancelled) {
           $scope.processQRCode($scope.imageData.text);
         }
       }, function(error) {
+        $scope.currentlyScanning = false;
         alert("An error happened -> " + error);
       });
     }
